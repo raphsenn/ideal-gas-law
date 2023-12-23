@@ -1,9 +1,7 @@
 #include "./sandbox.h"
 
 SandBox::SandBox()
-    : gravity(0.0, 0.0), slider_gravity_x(50, 70, true),
-      slider_gravity_y(300, 70, true), slider_restitution(550, 70, false),
-      restart_button(850, 0) {
+    : gravity(0.0, 0.0) {
 
   // width and height for window
   WIDTH = 1000;
@@ -20,14 +18,6 @@ SandBox::SandBox()
   if (!font.loadFromFile("fonts/monitorica.ttf"))
     printf("Error loading font\n");
 
-  // declare sliders, to manipulate gravity and restitution
-  slider_gravity_x.create(-5, 5, 0.0);
-  slider_gravity_y.create(-5.0, 5.0, 0.0);
-  slider_restitution.create(1.0, 0.0, 1.0);
-
-  // declare restart button
-  restart_button.create("Restart", font);
-
   numberOfParticles = 1000;
   for (size_t particle_i = 0; particle_i < numberOfParticles; particle_i++) {
     double particleRadius = 10;
@@ -38,8 +28,6 @@ SandBox::SandBox()
     Particle particle(particleRadius, particleMass, particlePosition, particleVelocity, particleColor);  // create ball
     particles.push_back(particle); // add ball to the ball list
   }
-  // words to draw on window
-  words = {"gravity.x", "gravity.y", "restitution"};
 }
 
 void SandBox::draw(sf::RenderWindow &window) {
@@ -67,19 +55,6 @@ void SandBox::draw(sf::RenderWindow &window) {
   }
   // draw lines
   window.draw(lines, 8, sf::Lines);
-
-  // draw text
-  int word_x = 50;
-  int word_y = 0;
-  for (size_t wordi = 0; wordi < words.size(); wordi++) {
-    sf::Text word;
-    word.setFont(font);
-    word.setString(words[wordi]);
-    word.setCharacterSize(30);
-    word.setPosition(word_x, word_y);
-    window.draw(word);
-    word_x += 250;
-  }
 }
 
 void SandBox::simulate() {
@@ -150,21 +125,12 @@ void SandBox::update(sf::RenderWindow &window) {
   window.clear();
   simulate();
   draw(window);
-  slider_gravity_x.draw(window);
-  slider_gravity_y.draw(window);
-  slider_restitution.draw(window);
-  restart_button.draw(window);
   user_input(window);
   window.display();
 }
 
 void SandBox::user_input(sf::RenderWindow &window) {
-  gravity.x = slider_gravity_x.getSliderValue();
-  gravity.y = slider_gravity_y.getSliderValue();
-  restitution = slider_restitution.getSliderValue();
-  if (restart_button.checkClick(window) == true) {
-    reset(); // restart simulation
-  }
+
 }
 
 void SandBox::run() {
@@ -181,10 +147,6 @@ void SandBox::run() {
 }
 
 void SandBox::reset() {
-  // reset sliders, gravity and restitution 
-  slider_gravity_x.reset(); // reset gravity x
-  slider_gravity_y.reset(); // reset gravity y
-  slider_restitution.reset(); // reset restution
   gravity = Vector2(0.0, 0.0);
   restitution = 1.0;
 

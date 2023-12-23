@@ -17,7 +17,6 @@ class SandBox {
     int SIMWIDTH; // width for simulation box
     int SIMHEIGHT; // height for simulation box
     sf::Font font; // font for text
-    std::vector<std::string> words; // array of words to plot in window
    
     // simulation 
     std::vector<Particle> particles; // list (array) of all particles
@@ -25,12 +24,6 @@ class SandBox {
     double restitution; // 0 < restitiution <= 1
     double dt; // simulation speed
     size_t numberOfParticles; // number of balls
-
-    // user interface
-    Slider slider_gravity_x; // manipulate gravity x vector
-    Slider slider_gravity_y; // manipulate gravity y vector
-    Slider slider_restitution; // manipulate restitution
-    Button restart_button; // clickable text to restart the simulation
 
   public:
     SandBox(); // Constructor
