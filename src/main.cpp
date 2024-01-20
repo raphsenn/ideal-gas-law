@@ -1,7 +1,7 @@
-#include "./sandbox.h"
+#include "./simulation.h"
 
 // main function
 int main() {
-  SandBox sb; // creates SandBox object.
-  sb.run();   // start the program
+  Simulation sim; // creates Simulation object.
+  sim.run();   // start the simulation.
 }

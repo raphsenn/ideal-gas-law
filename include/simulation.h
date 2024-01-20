@@ -1,5 +1,5 @@
-#ifndef SANDBOX_H
-#define SANDBOX_H
+#ifndef SIMULATION_H
+#define SIMULATION_H
 #include <vector>
 #include <cstdio>
 #include <cmath>
@@ -9,7 +9,7 @@
 #include "./slider.h"
 #include "./button.h"
 
-class SandBox {
+class Simulation {
   private:
     // application
     int WIDTH; // width of window
@@ -26,7 +26,7 @@ class SandBox {
     size_t numberOfParticles; // number of balls
 
   public:
-    SandBox(); // Constructor
+    Simulation(); // Constructor
     void simulate(); // simulates the particles
     void collisionToWall(Particle& particles); // physics logic for ball to wall collision
     void collisionBallToBall(Particle& particle_1, Particle& particle_2, double restitution); // physics logic for ball to ball collision
@@ -35,4 +35,4 @@ class SandBox {
     void draw(sf::RenderWindow& window); // draw method
     void user_input(sf::RenderWindow& window); // checks user input, sliders, and buttons
 };
-#endif // SANDBOX_H
+#endif // SIMULATION_H

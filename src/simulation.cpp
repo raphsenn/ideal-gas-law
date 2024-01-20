@@ -1,6 +1,6 @@
-#include "./sandbox.h"
+#include "./simulation.h"
 
-SandBox::SandBox()
+Simulation::Simulation()
   : WIDTH(1000),
     HEIGHT(800),
     SIMWIDTH(700),
@@ -25,7 +25,7 @@ SandBox::SandBox()
   }
 }
 
-void SandBox::draw(sf::RenderWindow &window) {
+void Simulation::draw(sf::RenderWindow &window) {
   // create simulation box lines
   sf::Vertex lines[] = {
       sf::Vertex(sf::Vector2f(50, 50)),  // Line 1 start (top)
@@ -52,7 +52,7 @@ void SandBox::draw(sf::RenderWindow &window) {
   window.draw(lines, 8, sf::Lines);
 }
 
-void SandBox::simulate() {
+void Simulation::simulate() {
   for (size_t particle_i = 0; particle_i < particles.size(); particle_i++) {
     particles[particle_i].simulate(gravity, dt);
 
@@ -63,7 +63,7 @@ void SandBox::simulate() {
   }
 }
 
-void SandBox::collisionToWall(Particle &particle) {
+void Simulation::collisionToWall(Particle &particle) {
   // Check collision with top wall
   if (particle.position.x < particle.radius + 50) {
     particle.position.x = particle.radius + 50;
@@ -86,7 +86,7 @@ void SandBox::collisionToWall(Particle &particle) {
   }
 }
 
-void SandBox::collisionBallToBall(Particle& particle_1, Particle& particle_2, double restitution) {
+void Simulation::collisionBallToBall(Particle& particle_1, Particle& particle_2, double restitution) {
   
   // Physics
   Vector2 direction(0.0, 0.0);
@@ -116,7 +116,7 @@ void SandBox::collisionBallToBall(Particle& particle_1, Particle& particle_2, do
   particle_2.velocity.add(direction, newV2 - v2);
 }
 
-void SandBox::update(sf::RenderWindow &window) {
+void Simulation::update(sf::RenderWindow &window) {
   window.clear();
   simulate();
   draw(window);
@@ -124,11 +124,11 @@ void SandBox::update(sf::RenderWindow &window) {
   window.display();
 }
 
-void SandBox::user_input(sf::RenderWindow &window) {
+void Simulation::user_input(sf::RenderWindow &window) {
 
 }
 
-void SandBox::run() {
+void Simulation::run() {
   sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Ideal gas law - physics simulation");
   // standard sfml window loop 
   while (window.isOpen()) {
