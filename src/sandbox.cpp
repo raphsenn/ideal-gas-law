@@ -1,24 +1,19 @@
 #include "./sandbox.h"
 
 SandBox::SandBox()
-    : gravity(0.0, 0.0) {
-
-  // width and height for window
-  WIDTH = 1000;
-  HEIGHT = 800;
-
-  // width and height for simulation box
-  SIMWIDTH = WIDTH - 50; // border right 50 pixel between simwall and window screen
-  SIMHEIGHT = HEIGHT - 50; // border at the bottom 50 pixel between simwall and winodw screen
-
-  dt = 1.0 / 60.0; // simulation speed
-  restitution = 1.0; // ratio of the relative velocity of seperation after collision
+  : WIDTH(1000),
+    HEIGHT(800),
+    SIMWIDTH(700),
+    SIMHEIGHT(700),
+    gravity(0.0, 0.0),
+    restitution(1.0),
+    dt(1.0 / 60.0),
+    numberOfParticles(1000) {
 
   // load relevant fonts
   if (!font.loadFromFile("fonts/monitorica.ttf"))
     printf("Error loading font\n");
 
-  numberOfParticles = 1000;
   for (size_t particle_i = 0; particle_i < numberOfParticles; particle_i++) {
     double particleRadius = 10;
     double particleMass = M_PI * particleRadius * particleRadius; // mass in kg
@@ -33,11 +28,11 @@ SandBox::SandBox()
 void SandBox::draw(sf::RenderWindow &window) {
   // create simulation box lines
   sf::Vertex lines[] = {
-      sf::Vertex(sf::Vector2f(50, 100)),  // Line 1 start (top)
-      sf::Vertex(sf::Vector2f(950, 100)), // Line 1 end
+      sf::Vertex(sf::Vector2f(50, 50)),  // Line 1 start (top)
+      sf::Vertex(sf::Vector2f(750, 50)), // Line 1 end
 
       sf::Vertex(sf::Vector2f(50, 750)),  // Line 2 start (bottom)
-      sf::Vertex(sf::Vector2f(950, 750)), // Line 2 end
+      sf::Vertex(sf::Vector2f(750, 750)), // Line 2 end
 
       sf::Vertex(sf::Vector2f(50, 100)), // Line 3 start (left)
       sf::Vertex(sf::Vector2f(50, 750)), // Line 3 end
@@ -143,23 +138,5 @@ void SandBox::run() {
         window.close();
     }
     update(window);
-  }
-}
-
-void SandBox::reset() {
-  gravity = Vector2(0.0, 0.0);
-  restitution = 1.0;
-
-  particles.clear(); // delete every ball in balls
-  numberOfParticles = 1000; // number of balls in simulation
-  
-  // create new balls
-  for (size_t particle_i = 0; particle_i < numberOfParticles; particle_i++) {
-    double particleRadius = getRandomRadius(); // create ball radius
-    Vector2 particlePosition = getRandomVector(SIMWIDTH, SIMHEIGHT);   // create ball position vector
-    Vector2 particleVelocity = getRandomVelocity(); // create ball velocity vector
-    sf::Color particleColor = sf::Color::Blue;     // create ball color
-    Particle particle(particleRadius, 1.0, particlePosition, particleVelocity, particleColor);  // create ball
-    particles.push_back(particle); // add ball to balls vector
   }
 }

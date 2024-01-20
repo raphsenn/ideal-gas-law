@@ -34,6 +34,5 @@ class SandBox {
     void update(sf::RenderWindow& window); // update method
     void draw(sf::RenderWindow& window); // draw method
     void user_input(sf::RenderWindow& window); // checks user input, sliders, and buttons
-    void reset(); // restarts the simulation
 };
 #endif // SANDBOX_H
