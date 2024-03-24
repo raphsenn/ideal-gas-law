@@ -1,31 +1,16 @@
-CXX := g++
-CXXFLAGS := -std=c++11 -Wall -Wextra -pedantic
-LDFLAGS := -lsfml-graphics -lsfml-window -lsfml-system
 
-SRC_DIR := src
-INCLUDE_DIR := include
-BUILD_DIR := build
-
-SRCS := $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
-
-.PHONY: all clean format
-
-all: compile
-
-compile: $(OBJS)
-	$(CXX) $(CXXFLAGS) -o main $(OBJS) $(LDFLAGS)
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -I$(INCLUDE_DIR)
-
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
-
-format:
-	clang-format -i $(SRC_DIR)/*.cpp $(INCLUDE_DIR)/*.h
+compile:
+	g++ -c -std=c++17 -I/opt/homebrew/Cellar/sfml/2.6.1/include simulation.cpp
+	g++ -c -std=c++17 -I/opt/homebrew/Cellar/sfml/2.6.1/include slider.cpp
+	g++ -c -std=c++17 -I/opt/homebrew/Cellar/sfml/2.6.1/include button.cpp
+	g++ -c -std=c++17 -I/opt/homebrew/Cellar/sfml/2.6.1/include particle.cpp
+	g++ -c -std=c++17 -I/opt/homebrew/Cellar/sfml/2.6.1/include random.cpp
+	g++ -c -std=c++17 -I/opt/homebrew/Cellar/sfml/2.6.1/include main.cpp
+	g++ -c -std=c++17 vector2.cpp
+	g++ -o main -std=c++17 main.o simulation.o slider.o button.o particle.o vector2.o random.o -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 clean:
+	rm -f *.o
 	rm -f main
-	rm -f $(BUILD_DIR)/*.o
-	rm -rf $(BUILD_DIR)
+
+
